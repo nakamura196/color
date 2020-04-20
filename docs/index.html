@@ -24,6 +24,7 @@
               <li>筑波（早稲田）: <a href="http://iizuka.cs.tsukuba.ac.jp/projects/colorization/web/">http://iizuka.cs.tsukuba.ac.jp/projects/colorization/web/</a></li>
               <li>Deep AI: <a href="https://deepai.org/machine-learning-model/colorizer">https://deepai.org/machine-learning-model/colorizer</a></li>
               <li>ColoriseSG: <a href="https://colourise.sg/">https://colourise.sg/</a></li>
+              <li>MyHeritiage In Color: <a href="https://www.myheritage.jp/incolor">https://www.myheritage.jp/incolor</a></li>
             </ul>
           </v-sheet>
           
@@ -39,20 +40,24 @@
 
             <template v-slot:item.original="{ item }">
               <template v-if="item.original">
-                <v-img contain :src="item.original" width="400px"/>
+                <v-img contain :src="item.original" :width="size"/>
               </template>
             </template>
 
             <template v-slot:item.tsukuba="{ item }">
-              <v-img contain :src="item.tsukuba" width="400px"/>
+              <v-img contain :src="item.tsukuba" :width="size"/>
             </template>
 
             <template v-slot:item.deepai="{ item }">
-              <v-img contain :src="item.deepai" width="400px"/>
+              <v-img contain :src="item.deepai" :width="size"/>
             </template>
 
             <template v-slot:item.colorisesg="{ item }">
-              <v-img contain :src="item.colorisesg" width="400px"/>
+              <v-img contain :src="item.colorisesg" :width="size"/>
+            </template>
+
+            <template v-slot:item.myheritiage="{ item }">
+              <v-img contain :src="item.myheritiage" :width="size"/>
             </template>
 
           </v-data-table>
@@ -77,12 +82,14 @@
       vuetify: new Vuetify(),
       data() {
         return {
+          size : 300,
           headers: [
             { text: '', value: 'index' },
             { text: '元画像', value: 'original' },
             { text: '筑波（早稲田）', value: 'tsukuba' },
             { text: 'Deep AI', value: 'deepai' },
-            { text: 'ColoriseSG', value: 'colorisesg' }
+            { text: 'ColoriseSG', value: 'colorisesg' },
+            { text: 'MyHeritiage In Color', value: 'myheritiage' }
           ],
           data: [],
         }
@@ -98,7 +105,8 @@
             "original" : "data/original/"+index+".jpg",
             "tsukuba" : "data/tsukuba/"+index+".jpg",
             "deepai" : "data/deepai/"+index+".jpg",
-            "colorisesg" : "data/colorisesg/"+index+".jpg"
+            "colorisesg" : "data/colorisesg/"+index+".jpg",
+            "myheritiage" : "data/myheritiage/"+index+".jpg"
           }
           this.data.push(row)
         }

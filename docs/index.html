@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+  <div id="app">
+    <v-app>
+      <v-app-bar color="primary" dark>
+        <v-toolbar-title>自動色付・比較ページ</v-toolbar-title>
+      </v-app-bar>
+
+      <v-content>
+        <v-container>
+
+          <v-sheet class="pa-5 my-5" color="grey lighten-3">
+            <ul>
+              <li>筑波（早稲田）: <a href="http://iizuka.cs.tsukuba.ac.jp/projects/colorization/web/">http://iizuka.cs.tsukuba.ac.jp/projects/colorization/web/</a></li>
+              <li>DeepAI: <a href="https://deepai.org/machine-learning-model/colorizer">https://deepai.org/machine-learning-model/colorizer</a></li>
+              <li>ColoriseSG: <a href="https://colourise.sg/">https://colourise.sg/</a></li>
+            </ul>
+          </v-sheet>
+          
+          <!-- 
+          <v-alert outlined type="warning" prominent border="left">
+            作業途中のため、データが完全でない点にご注意ください。
+          </v-alert>
+          -->
+
+          </v-sheet>
+
+          <v-data-table :headers="headers" :items="data" class="elevation-1 my-10" :items-per-page="100">
+
+            <template v-slot:item.original="{ item }">
+              <template v-if="item.original">
+                <v-img contain :src="item.original" width="400px"/>
+              </template>
+            </template>
+
+            <template v-slot:item.tsukuba="{ item }">
+              <v-img contain :src="item.tsukuba" width="400px"/>
+            </template>
+
+            <template v-slot:item.deepai="{ item }">
+              <v-img contain :src="item.deepai" width="400px"/>
+            </template>
+
+            <template v-slot:item.colorisesg="{ item }">
+              <v-img contain :src="item.colorisesg" width="400px"/>
+            </template>
+
+          </v-data-table>
+
+
+        </v-container>
+      </v-content>
+      <v-footer color="primary">
+        <span class="white--text text-center">デジタル源氏物語プロジェクト</span>
+      </v-footer>
+    </v-app>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+      data() {
+        return {
+          headers: [
+            { text: '', value: 'index' },
+            { text: '元画像', value: 'original' },
+            { text: '筑波（早稲田）', value: 'tsukuba' },
+            { text: 'Deep AI', value: 'deepai' },
+            { text: 'ColoriseSG', value: 'colorisesg' }
+          ],
+          data: [],
+        }
+      },
+      created() {
+        
+        const data = [1, 2, 3, 4]
+
+        for(let i = 0; i < data.length; i++){
+          index = ("00" + data[i]).slice(-2)
+          row = {
+            "index" : index,
+            "original" : "data/original/"+index+".jpg",
+            "tsukuba" : "data/tsukuba/"+index+".jpg",
+            "deepai" : "data/deepai/"+index+".jpg",
+            "colorisesg" : "data/colorisesg/"+index+".jpg"
+          }
+          this.data.push(row)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
